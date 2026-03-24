@@ -6,49 +6,139 @@
     <title>Concert Tickets - Accueil</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
             margin: 50px auto;
             padding: 20px;
-            background-color: #f4f4f4;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
         h1 {
             color: #333;
             text-align: center;
+            margin-bottom: 10px;
         }
-        .container {
-            background: white;
-            padding: 30px;
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+        .card {
+            background: #f8f9fa;
+            padding: 25px;
+            margin: 20px 0;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+        .card h2 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 24px;
         }
         .links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
             margin-top: 20px;
         }
         .links a {
             display: block;
-            padding: 10px;
-            margin: 10px 0;
-            background: #007bff;
+            padding: 15px 20px;
+            background: #667eea;
             color: white;
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 6px;
             text-align: center;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
         .links a:hover {
-            background: #0056b3;
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .api-link {
+            background: #28a745 !important;
+        }
+        .api-link:hover {
+            background: #218838 !important;
+        }
+        .doc-link {
+            background: #ffc107 !important;
+            color: #333 !important;
+        }
+        .doc-link:hover {
+            background: #e0a800 !important;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .feature-list li:before {
+            content: "✓ ";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🎵 Concert Tickets Application 🎵</h1>
-        <p>Bienvenue sur l'application de vente de tickets de concert !</p>
+        <p class="subtitle">Plateforme de gestion de vente de tickets de concert</p>
         
-        <div class="links">
-            <a href="/myurl">Test Servlet Simple</a>
-            <a href="/myform.html">Formulaire d'inscription</a>
-            <a href="/events">Liste des événements</a>
+        <div class="card">
+            <h2>Documentation API</h2>
+            <p>Explorez et testez l'API REST complète avec Swagger UI</p>
+            <div class="links">
+                <a href="/swagger-ui.html" class="doc-link">📖 Documentation Interactive (Swagger UI)</a>
+                <a href="/api/openapi.json" class="api-link">📄 Spécification OpenAPI (JSON)</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Endpoints disponibles</h2>
+            <ul class="feature-list">
+                <li><strong>Events</strong> - Gestion des événements et concerts</li>
+                <li><strong>Clients</strong> - Gestion des clients et points de fidélité</li>
+                <li><strong>Orders</strong> - Gestion des commandes</li>
+                <li><strong>Tickets</strong> - Gestion des tickets et QR codes</li>
+                <li><strong>Venues</strong> - Gestion des lieux de concert</li>
+                <li><strong>Categories</strong> - Gestion des catégories musicales</li>
+                <li><strong>Organizers</strong> - Gestion des organisateurs</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Liens rapides</h2>
+            <div class="links">
+                <a href="/api/events">Liste des événements</a>
+                <a href="/api/clients">Liste des clients</a>
+                <a href="/api/orders">Liste des commandes</a>
+                <a href="/api/venues">Liste des lieux</a>
+                <a href="/api/categories">Liste des catégories</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Statistiques</h2>
+            <div class="links">
+                <a href="/api/events/available">Événements disponibles</a>
+                <a href="/api/clients/top">Top clients</a>
+                <a href="/api/orders/stats">Statistiques commandes</a>
+                <a href="/api/categories/popular">Catégories populaires</a>
+            </div>
         </div>
     </div>
 </body>

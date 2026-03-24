@@ -3,6 +3,12 @@ package rest.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.servers.Server;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.ext.ContextResolver;
@@ -12,10 +18,33 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Configuration de l'application REST Jersey
- * @ApplicationPath définit le chemin de base pour tous les endpoints REST
+ * Configuration de l'application REST Jersey avec Swagger/OpenAPI
  */
 @ApplicationPath("/api")
+@OpenAPIDefinition(
+    info = @Info(
+        title = "Concert Tickets API",
+        version = "1.0.0",
+        description = "API REST pour la gestion de vente de tickets de concert en ligne. " +
+                      "Cette API permet de gérer les événements, les clients, les commandes, " +
+                      "les tickets, les lieux et les organisateurs.",
+        contact = @Contact(
+            name = "Équipe de développement",
+            email = "support@concert-tickets.com",
+            url = "https://concert-tickets.com"
+        ),
+        license = @License(
+            name = "MIT License",
+            url = "https://opensource.org/licenses/MIT"
+        )
+    ),
+    servers = {
+        @Server(
+            description = "Serveur de développement",
+            url = "http://localhost:8080"
+        )
+    }
+)
 public class JerseyConfig extends Application {
 
     @Override
@@ -24,6 +53,9 @@ public class JerseyConfig extends Application {
         
         // Enregistrer le provider Jackson personnalisé
         resources.add(JacksonConfig.class);
+        
+        // Enregistrer la ressource OpenAPI (génère le fichier openapi.json)
+        resources.add(OpenApiResource.class);
         
         return resources;
     }
