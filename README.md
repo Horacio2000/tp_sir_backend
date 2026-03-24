@@ -1,1 +1,3 @@
-# Template de projet pour le TP JPA 2021 UniR
+# Projet SIR
+
+# Binome : Abel-Horacio SOSSOU  & Stephane BANKOLE

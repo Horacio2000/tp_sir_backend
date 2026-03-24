@@ -26,7 +26,7 @@ public class DaoTest {
             testTicketDao();
             testPaymentDao();
 
-            System.out.println("\n=== TOUS LES TESTS SONT PASSÉS ✅ ===");
+            System.out.println("\n=== TOUS LES TESTS SONT PASSÉS ===");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +58,7 @@ public class DaoTest {
                 clientDao.getTotalSpent(clientId) + "€");
         }
 
-        System.out.println("✅ ClientDao OK\n");
+        System.out.println("ClientDao OK\n");
     }
 
     private static void testEventDao() {
@@ -86,7 +86,7 @@ public class DaoTest {
                 eventDao.calculateRevenue(eventId) + "€");
         }
 
-        System.out.println("✅ EventDao OK\n");
+        System.out.println("EventDao OK\n");
     }
 
     private static void testOrganizerDao() {
@@ -107,7 +107,7 @@ public class DaoTest {
                 organizerDao.getTotalRevenue(orgId) + "€");
         }
 
-        System.out.println("✅ OrganizerDao OK\n");
+        System.out.println("OrganizerDao OK\n");
     }
 
     private static void testVenueDao() {
@@ -126,7 +126,7 @@ public class DaoTest {
         System.out.println("  Criteria - Recherche France: " + 
             venueDao.findByCriteria(null, "France", null, null).size());
 
-        System.out.println("✅ VenueDao OK\n");
+        System.out.println("VenueDao OK\n");
     }
 
     private static void testCategoryDao() {
@@ -148,7 +148,7 @@ public class DaoTest {
                 categoryDao.getEventCount(catId));
         }
 
-        System.out.println("✅ CategoryDao OK\n");
+        System.out.println("CategoryDao OK\n");
     }
 
     private static void testOrderDao() {
@@ -168,7 +168,7 @@ public class DaoTest {
         System.out.println("  Métier - Revenu total: " + 
             orderDao.getTotalRevenue() + "€");
 
-        System.out.println("✅ OrderDao OK\n");
+        System.out.println("OrderDao OK\n");
     }
 
     private static void testTicketDao() {
@@ -191,7 +191,7 @@ public class DaoTest {
                 ticketDao.countSoldTicketsByEvent(eventId));
         }
 
-        System.out.println("✅ TicketDao OK\n");
+        System.out.println("TicketDao OK\n");
     }
 
     private static void testPaymentDao() {
@@ -212,6 +212,6 @@ public class DaoTest {
         System.out.println("  Métier - Paiements par carte: " + 
             paymentDao.getTotalAmountByMethod(PaymentMethod.CARD) + "€");
 
-        System.out.println("✅ PaymentDao OK\n");
+        System.out.println("PaymentDao OK\n");
     }
 }
