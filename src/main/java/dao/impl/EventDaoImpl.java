@@ -4,6 +4,7 @@ import dao.IEventDao;
 import dao.generic.AbstractJpaDao;
 import entity.Event;
 import entity.enums.EventStatus;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.criteria.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -156,14 +157,15 @@ public class EventDaoImpl extends AbstractJpaDao<Long, Event> implements IEventD
 
     @Override
     public void updateAvailableTickets(Long eventId, int delta) {
-        Event event = findOne(eventId);
-        if (event != null) {
-            if (delta < 0) {
-                event.decreaseAvailableTickets(Math.abs(delta));
-            } else {
-                event.increaseAvailableTickets(delta);
-            }
-            update(event);
-        }
+        EntityTransaction t = entityManager.getTransaction();
+        t.begin();
+        String jpql = delta < 0
+            ? "UPDATE Event e SET e.availableTickets = e.availableTickets - :count WHERE e.id = :id"
+            : "UPDATE Event e SET e.availableTickets = e.availableTickets + :count WHERE e.id = :id";
+        entityManager.createQuery(jpql)
+            .setParameter("count", Math.abs(delta))
+            .setParameter("id", eventId)
+            .executeUpdate();
+        t.commit();
     }
 }

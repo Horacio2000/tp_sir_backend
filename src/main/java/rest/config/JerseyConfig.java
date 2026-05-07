@@ -25,13 +25,10 @@ import java.util.Set;
     info = @Info(
         title = "Concert Tickets API",
         version = "1.0.0",
-        description = "API REST pour la gestion de vente de tickets de concert en ligne. " +
-                      "Cette API permet de gérer les événements, les clients, les commandes, " +
-                      "les tickets, les lieux et les organisateurs.",
+        description = "API REST pour la gestion de vente de tickets",
         contact = @Contact(
             name = "Équipe de développement",
-            email = "support@concert-tickets.com",
-            url = "https://concert-tickets.com"
+            email = "support@concert-tickets.com"
         ),
         license = @License(
             name = "MIT License",
@@ -54,15 +51,30 @@ public class JerseyConfig extends Application {
         // Enregistrer le provider Jackson personnalisé
         resources.add(JacksonConfig.class);
         
-        // Enregistrer la ressource OpenAPI (génère le fichier openapi.json)
+        // Enregistrer la ressource OpenAPI
         resources.add(OpenApiResource.class);
+        
+        // ✅ IMPORTANT : Enregistrer manuellement les controllers
+        resources.add(rest.controller.EventController.class);
+        resources.add(rest.controller.ClientController.class);
+        resources.add(rest.controller.OrderController.class);
+        resources.add(rest.controller.TicketController.class);
+        resources.add(rest.controller.VenueController.class);
+        resources.add(rest.controller.CategoryController.class);
+        resources.add(rest.controller.OrganizerController.class);
+        resources.add(rest.controller.AuthController.class);
+        
+        // Enregistrer les exception mappers
+        resources.add(rest.exception.RestExceptionMapper.class);
+
+        // Filtre CORS (requis pour le frontend Angular sur :4200)
+        resources.add(rest.filter.CorsFilter.class);
+
+        resources.add(rest.filter.EntityManagerFilter.class);
         
         return resources;
     }
 
-    /**
-     * Configuration de Jackson pour la sérialisation JSON
-     */
     @Provider
     public static class JacksonConfig implements ContextResolver<ObjectMapper> {
 
@@ -70,14 +82,8 @@ public class JerseyConfig extends Application {
 
         public JacksonConfig() {
             objectMapper = new ObjectMapper();
-            
-            // Support des types Java 8 Date/Time (LocalDate, LocalDateTime, etc.)
             objectMapper.registerModule(new JavaTimeModule());
-            
-            // Écrire les dates en format ISO-8601 au lieu de timestamps
             objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-            
-            // Indenter le JSON pour le rendre lisible
             objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         }
 

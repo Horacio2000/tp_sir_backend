@@ -1,65 +1,73 @@
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\user\Organizer.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dto\mapper\OrderMapper.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\Order.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\servlet\UserInfo.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\enums\TicketType.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\impl\TicketDaoImpl.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\rest\exception\BadRequestException.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dto\mapper\TicketMapper.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\Venue.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\rest\controller\TicketController.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dto\TicketDto.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\impl\PaymentDaoImpl.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\Event.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\impl\OrganizerDaoImpl.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dto\mapper\EventMapper.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\rest\exception\ResourceNotFoundException.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\enums\OrderStatus.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\rest\controller\CategoryController.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\IOrderDao.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\user\User.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\Category.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\Ticket.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dto\mapper\OrganizerMapper.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\enums\TicketStatus.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dto\mapper\VenueMapper.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\rest\controller\EventController.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dto\OrderDto.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dto\mapper\ClientMapper.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\IPaymentDao.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\ICategoryDao.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\impl\CategoryDaoImpl.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dto\EventDto.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\enums\PaymentStatus.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\enums\EventStatus.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\IClientDao.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\impl\OrderDaoImpl.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\test\DaoTest.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\generic\AbstractJpaDao.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\ITicketDao.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\impl\VenueDaoImpl.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\servlet\MyServlet.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\jpa\JpaTest.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\generic\IGenericDao.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\IOrganizerDao.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dto\CategoryDto.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\IVenueDao.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\Payment.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\user\Administrator.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\jpa\EntityManagerHelper.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\IEventDao.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\rest\exception\RestExceptionMapper.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\enums\PaymentMethod.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\rest\controller\OrganizerController.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\rest\config\JerseyConfig.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\rest\controller\OrderController.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\generic\EntityManagerHelper.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dto\OrganizerDto.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dto\mapper\CategoryMapper.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dto\ClientDto.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\impl\EventDaoImpl.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\rest\controller\ClientController.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dao\impl\ClientDaoImpl.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\dto\VenueDto.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\rest\controller\VenueController.java
-C:\Master 1 MIAGE\Semestre 2\SIR\tpjpa2024\src\main\java\entity\user\Client.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\enums\PaymentMethod.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\rest\controller\TicketController.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\rest\controller\OrganizerController.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\rest\filter\EntityManagerFilter.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\jpa\JpaTest.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\rest\filter\CorsFilter.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\IVenueDao.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\EventDto.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\impl\VenueDaoImpl.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\impl\AdministratorDaoImpl.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\generic\IGenericDao.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\IOrderDao.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\rest\controller\AuthController.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\user\Administrator.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\jpa\EntityManagerHelper.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\enums\PaymentStatus.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\Ticket.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\rest\controller\ClientController.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\rest\controller\EventController.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\test\DaoTest.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\mapper\AdministratorMapper.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\generic\AbstractJpaDao.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\OrderDto.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\rest\config\JerseyConfig.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\impl\OrderDaoImpl.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\mapper\CategoryMapper.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\Category.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\TicketDto.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\rest\exception\ResourceNotFoundException.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\rest\controller\CategoryController.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\IEventDao.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\IPaymentDao.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\IAdministratorDao.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\Order.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\ClientDto.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\mapper\VenueMapper.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\AdministratorDto.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\Venue.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\rest\controller\OrderController.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\generic\EntityManagerHelper.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\mapper\OrderMapper.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\OrganizerDto.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\mapper\OrganizerMapper.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\enums\TicketType.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\user\Client.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\impl\TicketDaoImpl.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\impl\EventDaoImpl.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\CategoryDto.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\mapper\TicketMapper.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\IOrganizerDao.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\rest\controller\VenueController.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\rest\exception\BadRequestException.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\servlet\MyServlet.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\impl\OrganizerDaoImpl.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\impl\PaymentDaoImpl.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\user\User.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\ICategoryDao.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\mapper\EventMapper.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\enums\EventStatus.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\enums\OrderStatus.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\VenueDto.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\user\Organizer.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\Event.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\rest\exception\RestExceptionMapper.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\ITicketDao.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\servlet\UserInfo.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\impl\CategoryDaoImpl.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\enums\TicketStatus.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\impl\ClientDaoImpl.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\LoginDto.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dto\mapper\ClientMapper.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\entity\Payment.java
+C:\Master_1_MIAGE\Semestre_2\SIR\tpjpa2024\src\main\java\dao\IClientDao.java

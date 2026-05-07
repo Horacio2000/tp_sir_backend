@@ -1,13 +1,19 @@
 package rest.controller;
 
 import dao.IEventDao;
+import dao.IOrganizerDao;
+import dao.IVenueDao;
 import dao.impl.EventDaoImpl;
+import dao.impl.OrganizerDaoImpl;
+import dao.impl.VenueDaoImpl;
+import rest.exception.BadRequestException;
 import dto.EventDto;
 import dto.mapper.EventMapper;
 import entity.Event;
+import entity.Venue;
 import entity.enums.EventStatus;
+import entity.user.Organizer;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,6 +25,7 @@ import rest.exception.ResourceNotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -32,9 +39,14 @@ import java.util.stream.Collectors;
 public class EventController {
 
     private final IEventDao eventDao;
+    private final IOrganizerDao organizerDao;
+    private final IVenueDao venueDao;
+
 
     public EventController() {
         this.eventDao = new EventDaoImpl();
+        this.organizerDao = new OrganizerDaoImpl();
+        this.venueDao = new VenueDaoImpl();
     }
 
     // ============================================================
@@ -113,8 +125,8 @@ public class EventController {
             @ApiResponse(responseCode = "400", description = "Données invalides")
         }
     )
+
     public Response createEvent(EventDto dto) {
-        // Validation
         if (dto.getTitle() == null || dto.getTitle().trim().isEmpty()) {
             throw new BadRequestException("Le titre est obligatoire");
         }
@@ -124,10 +136,37 @@ public class EventController {
         if (dto.getBasePrice() == null || dto.getBasePrice() <= 0) {
             throw new BadRequestException("Le prix doit être supérieur à 0");
         }
-        
+
         Event event = EventMapper.toEntity(dto);
+
+        // Créer le venue à partir des champs texte du DTO
+        if (dto.getVenueName() != null && !dto.getVenueName().trim().isEmpty()) {
+            Venue venue = new Venue();
+            venue.setName(dto.getVenueName());
+            venue.setCity(dto.getVenueCity());
+            venue.setAddress(dto.getVenueCity() != null ? dto.getVenueCity() : "Non renseignée");
+            venue.setCapacity(dto.getVenueCapacity() != null ? dto.getVenueCapacity() : 0); 
+            venue.setCountry(dto.getVenueCountry() != null ? dto.getVenueCountry() : "Non renseignée"); 
+
+
+            if (dto.getVenueCapacity() != null) {
+                venue.setCapacity(dto.getVenueCapacity());
+            }
+            venueDao.save(venue);
+            event.setVenue(venue);
+        }
+
+        // Associer l'organisateur si fourni
+        if (dto.getOrganizerId() != null) {
+            Organizer organizer = organizerDao.findOne(dto.getOrganizerId());
+            if (organizer == null) {
+                throw new ResourceNotFoundException("Organizer", "id", dto.getOrganizerId());
+            }
+            event.setOrganizer(organizer);
+        }
+
         eventDao.save(event);
-        
+
         return Response.status(Response.Status.CREATED)
                 .entity(EventMapper.toDto(event))
                 .build();
@@ -147,20 +186,17 @@ public class EventController {
             @ApiResponse(responseCode = "404", description = "Événement non trouvé")
         }
     )
-    public Response updateEvent(
-            @PathParam("id") Long id,
-            EventDto dto) {
-        
+    
+    public Response updateEvent(@PathParam("id") Long id, EventDto dto) {
         try {
             Event existing = eventDao.findOne(id);
-            
+
             if (existing == null) {
                 return Response.status(Response.Status.NOT_FOUND)
                         .entity("Événement non trouvé")
                         .build();
             }
-            
-            // Mettre à jour les champs
+
             existing.setTitle(dto.getTitle());
             existing.setDescription(dto.getDescription());
             existing.setEventDate(dto.getEventDate());
@@ -169,16 +205,41 @@ public class EventController {
             existing.setBasePrice(dto.getBasePrice());
             existing.setStatus(dto.getStatus());
             
+            existing.setTitle(dto.getTitle());
+
+            // Venue : mettre à jour l'existant, sinon en créer un
+            if (dto.getVenueName() != null && !dto.getVenueName().trim().isEmpty()) {
+                Venue venue = existing.getVenue() != null ? existing.getVenue() : new Venue();
+                venue.setName(dto.getVenueName());
+                venue.setCity(dto.getVenueCity());
+                if (dto.getVenueCapacity() != null) venue.setCapacity(dto.getVenueCapacity());
+                if (venue.getId() == null) venueDao.save(venue);
+                existing.setVenue(venue);
+            }
+
+            // Mettre à jour l'organisateur si fourni
+            if (dto.getOrganizerId() != null) {
+                Organizer organizer = organizerDao.findOne(dto.getOrganizerId());
+                if (organizer == null) {
+                    throw new ResourceNotFoundException("Organizer", "id", dto.getOrganizerId());
+                }
+                existing.setOrganizer(organizer);
+            }
+
             Event updated = eventDao.update(existing);
-            EventDto updatedDto = EventMapper.toDto(updated);
-            
-            return Response.ok(updatedDto).build();
+            return Response.ok(EventMapper.toDto(updated)).build();
+
+        } catch (ResourceNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(Map.of("error", e.getMessage()))
+                    .build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Erreur: " + e.getMessage())
+                    .entity(Map.of("error", e.getMessage()))
                     .build();
         }
     }
+
 
     /**
      * DELETE /api/events/{id}
@@ -290,6 +351,37 @@ public class EventController {
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("Erreur: " + e.getMessage())
+                    .build();
+        }
+    }
+
+    /**
+     * GET /api/events/organizer/{organizerId}
+     * Récupère les événements d'un organisateur spécifique
+     */
+    @GET
+    @Path("/organizer/{organizerId}")
+    @Operation(summary = "Événements d'un organisateur")
+    public Response getEventsByOrganizer(@PathParam("organizerId") Long organizerId) {
+        try {
+            Organizer organizer = organizerDao.findOne(organizerId);
+            if (organizer == null) {
+                throw new ResourceNotFoundException("Organizer", "id", organizerId);
+            }
+
+            List<Event> events = eventDao.findByOrganizer(organizerId);
+            List<EventDto> dtos = events.stream()
+                    .map(EventMapper::toDto)
+                    .collect(Collectors.toList());
+
+            return Response.ok(dtos).build();
+        } catch (ResourceNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(Map.of("error", e.getMessage()))
+                    .build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(Map.of("error", e.getMessage()))
                     .build();
         }
     }

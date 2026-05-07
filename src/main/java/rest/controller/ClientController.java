@@ -3,6 +3,7 @@ package rest.controller;
 import dao.IClientDao;
 import dao.impl.ClientDaoImpl;
 import dto.ClientDto;
+import dto.LoginDto;
 import dto.mapper.ClientMapper;
 import entity.user.Client;
 import io.swagger.v3.oas.annotations.Operation;
@@ -99,12 +100,38 @@ public class ClientController {
         });
         
         Client client = ClientMapper.toEntity(dto);
+        client.setPassword(dto.getPassword() != null ? dto.getPassword() : "");
         clientDao.save(client);
         
         return Response.status(Response.Status.CREATED)
                 .entity(ClientMapper.toDto(client))
                 .build();
     }
+
+    @POST
+    @Path("/login")
+    @Operation(summary = "Authentifie un client par email et mot de passe")
+    public Response login(LoginDto dto) {
+        if (dto.getEmail() == null || dto.getPassword() == null) {
+            throw new BadRequestException("Email et mot de passe obligatoires");
+        }
+
+        Client client = clientDao.findByEmail(dto.getEmail())
+            .orElseThrow(() -> new ResourceNotFoundException("Client", "email", dto.getEmail()));
+
+        if (!dto.getPassword().equals(client.getPassword())) {
+            return Response.status(Response.Status.UNAUTHORIZED)
+                .entity("{\"error\":\"Email ou mot de passe incorrect\"}")
+                .build();
+        }
+
+        ClientDto clientDto = ClientMapper.toDto(client);
+        clientDto.setTotalOrders(clientDao.getTotalOrdersCount(client.getId()));
+        clientDto.setTotalSpent(clientDao.getTotalSpent(client.getId()));
+
+        return Response.ok(clientDto).build();
+    }
+
 
     /**
      * PUT /api/clients/{id}

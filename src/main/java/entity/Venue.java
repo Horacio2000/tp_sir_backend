@@ -28,16 +28,16 @@ public class Venue implements Serializable {
     @Column(nullable = false, length = 200)
     private String name;
     
-    @Column(nullable = false, length = 300)
+    @Column(nullable = true, length = 300)
     private String address;
     
     @Column(nullable = false, length = 100)
     private String city;
     
-    @Column(nullable = false, length = 100)
+    @Column(nullable = true, length = 100)
     private String country;
     
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Integer capacity;
     
     @Column(length = 1000)

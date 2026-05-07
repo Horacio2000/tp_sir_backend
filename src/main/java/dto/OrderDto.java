@@ -13,6 +13,10 @@ public class OrderDto {
 
     private Long id;
     private String orderNumber;
+
+    private Long eventId;
+    private String ticketType;   
+    private Integer quantity;
     
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime orderDate;
@@ -137,6 +141,15 @@ public class OrderDto {
     public void setTicketCount(Integer ticketCount) {
         this.ticketCount = ticketCount;
     }
+
+    public Long getEventId() { return eventId; }
+    public void setEventId(Long eventId) { this.eventId = eventId; }
+
+    public String getTicketType() { return ticketType; }
+    public void setTicketType(String ticketType) { this.ticketType = ticketType; }
+
+    public Integer getQuantity() { return quantity; }
+    public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
     @Override
     public String toString() {

@@ -112,8 +112,9 @@ public class OrganizerController {
         }
         
         Organizer organizer = OrganizerMapper.toEntity(dto);
+        organizer.setPassword(dto.getPassword() != null ? dto.getPassword() : ""); // ← ajouter
         organizerDao.save(organizer);
-        
+
         return Response.status(Response.Status.CREATED)
                 .entity(OrganizerMapper.toDto(organizer))
                 .build();

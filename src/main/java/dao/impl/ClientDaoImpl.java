@@ -3,6 +3,7 @@ package dao.impl;
 import dao.IClientDao;
 import dao.generic.AbstractJpaDao;
 import entity.user.Client;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,12 +101,16 @@ public class ClientDaoImpl extends AbstractJpaDao<Long, Client> implements IClie
 
     @Override
     public void addLoyaltyPoints(Long clientId, int points) {
-        Client client = findOne(clientId);
-        if (client != null) {
-            client.addLoyaltyPoints(points);
-            update(client);
-        }
+        EntityTransaction t = entityManager.getTransaction();
+        t.begin();
+        entityManager.createQuery(
+            "UPDATE Client c SET c.loyaltyPoints = c.loyaltyPoints + :points WHERE c.id = :id")
+            .setParameter("points", points)
+            .setParameter("id", clientId)
+            .executeUpdate();
+        t.commit();
     }
+
 
     @Override
     public int getTotalOrdersCount(Long clientId) {

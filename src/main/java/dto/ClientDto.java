@@ -13,6 +13,8 @@ public class ClientDto {
     private String firstName;
     private String lastName;
     private String phone;
+    private String password;
+
     private Integer loyaltyPoints;
     
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -70,6 +72,10 @@ public class ClientDto {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public String getPassword() { return password; }
+    
+    public void setPassword(String password) { this.password = password; }
 
     public Integer getLoyaltyPoints() {
         return loyaltyPoints;

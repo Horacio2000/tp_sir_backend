@@ -15,6 +15,7 @@ public class OrganizerDto {
     private String companyName;
     private String siret;
     private String bankAccount;
+    private String password;
     
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
@@ -88,6 +89,15 @@ public class OrganizerDto {
 
     public void setBankAccount(String bankAccount) {
         this.bankAccount = bankAccount;
+    }
+
+    // Getter/Setter
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public LocalDateTime getCreatedAt() {

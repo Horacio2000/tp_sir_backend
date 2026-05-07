@@ -14,6 +14,7 @@ public class EventDto {
     private Long id;
     private String title;
     private String description;
+    private Long organizerId;
     
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate eventDate;
@@ -33,6 +34,7 @@ public class EventDto {
     private String venueName;
     private String venueCity;
     private Integer venueCapacity;
+    private String venueCountry;
     
     // Informations de l'organisateur (dénormalisées)
     private String organizerName;
@@ -163,6 +165,14 @@ public class EventDto {
         this.venueCapacity = venueCapacity;
     }
 
+    public String getVenueCountry() {
+        return venueCountry;
+    }
+
+    public void setVenueCountry(String venueCountry) {
+        this.venueCountry = venueCountry;
+    }
+
     public String getOrganizerName() {
         return organizerName;
     }
@@ -194,6 +204,15 @@ public class EventDto {
     public void setRevenue(Double revenue) {
         this.revenue = revenue;
     }
+
+    public Long getOrganizerId() { 
+        return organizerId; 
+    }
+
+    public void setOrganizerId(Long organizerId) { 
+        this.organizerId = organizerId; 
+    }
+
 
     @Override
     public String toString() {
