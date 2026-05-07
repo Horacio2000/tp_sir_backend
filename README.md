@@ -56,26 +56,75 @@ mvn clean compile jetty:run
 
 ### URLs
 
-| Ressource | URL |
-|---|---|
-| API REST | `http://localhost:8080/api/*` |
-| Swagger UI | `http://localhost:8080/swagger-ui.html` |
+| Ressource           | URL                                      |
+|---------------------|------------------------------------------|
+| API REST            | `http://localhost:8080/api/*`            |
+| Swagger UI          | `http://localhost:8080/swagger-ui.html`  |
 | Spec OpenAPI (JSON) | `http://localhost:8080/api/openapi.json` |
 
 ---
 
-## Créer un compte Administrateur
+## Données de test & Tests JPA/DAO
 
-Les comptes admin ne passent pas par l'API — ils sont insérés directement en base via le client HSQLDB (`DatabaseManager`) :
+Deux classes de test sont disponibles dans `src/main/java/` pour peupler la base et valider le code.
 
-```sql
--- 1. Table parente users
-INSERT INTO users (dtype, email, password, first_name, last_name, created_at)
-VALUES ('ADMIN', 'admin@concert.fr', 'admin123', 'Super', 'Admin', NOW());
+### `jpa/JpaTest.java` — Données de test + relations + JPQL
 
--- 2. Table administrators (avec l'ID généré)
-INSERT INTO administrators (id, access_level, department)
-VALUES (IDENTITY(), 'FULL', 'Direction');
+Lance directement depuis l'IDE (Run as Java Application) ou via Maven :
+
+```bash
+mvn exec:java -Dexec.mainClass="jpa.JpaTest"
+```
+
+**Ce que fait ce script :**
+- Insère en base (seulement si la base est vide) :
+  - 4 catégories : Rock, Pop, Jazz, Electro
+  - 3 salles : Zénith Paris, Olympia, AccorHotels Arena
+  - 3 clients, 2 organisateurs, 1 administrateur
+  - 3 événements publiés avec catégories (ManyToMany)
+  - 8 tickets (SIMPLE / PREMIUM / VIP / VVIP)
+  - 3 commandes confirmées avec paiement
+- Vérifie les relations bidirectionnelles (`Client ↔ Order`, `Organizer ↔ Event`, `Event ↔ Category`)
+- Exécute des requêtes JPQL : statistiques, revenus, tickets par type, top clients
+
+> Le script est **idempotent** : si des événements existent déjà, l'insertion est ignorée.
+
+### `test/DaoTest.java` — Tests de toutes les DAOs
+
+À exécuter **après** `JpaTest` (nécessite des données en base) :
+
+```bash
+mvn exec:java -Dexec.mainClass="test.DaoTest"
+```
+
+**Valide pour chaque DAO :**
+
+| DAO | JPQL | Named Query | Criteria Query | Méthodes métier |
+|-----|------|-------------|----------------|-----------------|
+| `ClientDaoImpl` | `findByEmail` | `findTopClients` | `findByCriteria` | `getTotalSpent` |
+| `EventDaoImpl` | `findByStatus` | `findUpcomingEvents` | `findByCriteria` | `countTicketsSold`, `calculateRevenue` |
+| `OrganizerDaoImpl` | `findByEmail` | — | — | `getEventCount`, `getTotalRevenue` |
+| `VenueDaoImpl` | `findByCity` | `findByMinCapacityNamed` | `findByCriteria` | — |
+| `CategoryDaoImpl` | `findByName` | `findPopularCategories` | — | `getEventCount` |
+| `OrderDaoImpl` | `findByStatus` | `findRecentOrders` | — | `getTotalRevenue` |
+| `TicketDaoImpl` | `findByStatus` | — | `findByCriteria` | `countSoldTicketsByEvent` |
+
+---
+
+## Compte Administrateur
+
+Le compte admin est **créé automatiquement au démarrage** par `DataInitializer.java` (`@WebListener`).
+
+| Email | Mot de passe |
+|---|---|
+| `admin@concert.fr` | `admin123` |
+
+Si l'admin existe déjà en base, le script le détecte et ne crée pas de doublon. Le résultat s'affiche dans les logs Jetty :
+
+```
+[DataInitializer] Compte admin créé : admin@concert.fr / admin123
+# ou, si déjà présent :
+[DataInitializer] Admin déjà présent : admin@concert.fr
 ```
 
 ---
@@ -90,14 +139,14 @@ User (abstract — héritage JOINED)
 ├── Organizer     (companyName, siret, bankAccount)
 └── Administrator (accessLevel, department)
 
-Event ──▶ Venue       (lieu du concert)
-      ──▶ Organizer   (créateur de l'événement)
-      ──▶ Category    (genre musical)
+Event ──> Venue       (lieu du concert)
+      ──> Organizer   (créateur de l'événement)
+      ──> Category    (genre musical)
 
-Order ──▶ Client
-      ──▶ Ticket[]
+Order ──> Client
+      ──> Ticket[]
 
-Ticket ──▶ Event
+Ticket ──> Event
            type: SIMPLE / PREMIUM / VIP / VVIP
 
 Payment (abstract — héritage)
@@ -191,6 +240,9 @@ src/main/java/
         ├── CorsFilter.java            # Headers CORS (accès depuis Angular)
         └── EntityManagerFilter.java   # Nettoyage EntityManager après chaque requête
 
+servlet/
+└── DataInitializer.java               # @WebListener — crée l'admin au démarrage
+
 src/main/webapp/
 └── WEB-INF/
     └── web.xml
@@ -203,50 +255,50 @@ src/main/webapp/
 Base URL : `http://localhost:8080/api`
 
 ### Authentification
-| Méthode | Endpoint | Description |
-|---|---|---|
-| `POST` | `/auth/login` | Connexion unifiée — retourne `{ role, user }` |
+| Méthode | Endpoint      | Description                                   |
+|---------|---------------|-----------------------------------------------|
+| `POST`  | `/auth/login` | Connexion unifiée — retourne `{ role, user }` |
 
 ### Clients
-| Méthode | Endpoint | Description |
-|---|---|---|
-| `GET` | `/clients` | Liste tous les clients |
-| `GET` | `/clients/{id}` | Détail d'un client |
-| `POST` | `/clients` | Créer un client (inscription) |
-| `PUT` | `/clients/{id}` | Modifier un client |
-| `DELETE` | `/clients/{id}` | Supprimer un client |
-| `GET` | `/clients/{id}/stats` | Statistiques d'un client |
-| `POST` | `/clients/{id}/loyalty` | Ajouter des points de fidélité |
+| Méthode  | Endpoint               | Description                    |
+|----------|------------------------|--------------------------------|
+| `GET`    | `/clients`             | Liste tous les clients         |
+| `GET`    | `/clients/{id}`        | Détail d'un client             |
+| `POST`   | `/clients`             | Créer un client (inscription)  |
+| `PUT`    | `/clients/{id}`        | Modifier un client             |
+| `DELETE` | `/clients/{id}`        | Supprimer un client            |
+| `GET`    | `/clients/{id}/stats`  | Statistiques d'un client       |
+| `POST`   | `/clients/{id}/loyalty`| Ajouter des points de fidélité |
 
 ### Organisateurs
-| Méthode | Endpoint | Description |
-|---|---|---|
-| `GET` | `/organizers` | Liste tous les organisateurs |
-| `POST` | `/organizers` | Créer un organisateur (inscription) |
-| `PUT` | `/organizers/{id}` | Modifier un organisateur |
-| `DELETE` | `/organizers/{id}` | Supprimer un organisateur |
-| `GET` | `/organizers/{id}/stats` | Statistiques d'un organisateur |
+| Méthode  | Endpoint                 | Description                         |
+|----------|--------------------------|-------------------------------------|
+| `GET`    | `/organizers`            | Liste tous les organisateurs        |
+| `POST`   | `/organizers`            | Créer un organisateur (inscription) |
+| `PUT`    | `/organizers/{id}`       | Modifier un organisateur            |
+| `DELETE` | `/organizers/{id}`       | Supprimer un organisateur           |
+| `GET`    | `/organizers/{id}/stats` | Statistiques d'un organisateur      |
 
 ### Événements
-| Méthode | Endpoint | Description |
-|---|---|---|
-| `GET` | `/events` | Liste tous les événements |
-| `GET` | `/events/available` | Événements avec billets disponibles |
-| `GET` | `/events/{id}` | Détail + statistiques d'un événement |
-| `GET` | `/events/search` | Recherche (ville, prix, date, statut) |
-| `GET` | `/events/organizer/{id}` | Événements d'un organisateur |
-| `POST` | `/events` | Créer un événement |
-| `PUT` | `/events/{id}` | Modifier un événement |
-| `DELETE` | `/events/{id}` | Supprimer un événement |
+| Méthode   | Endpoint                 | Description                           |
+|-----------|--------------------------|---------------------------------------|
+| `GET`     | `/events`                | Liste tous les événements             |
+| `GET`     | `/events/available`      | Événements avec billets disponibles   |
+| `GET`     | `/events/{id}`           | Détail + statistiques d'un événement  |
+| `GET`     | `/events/search`         | Recherche (ville, prix, date, statut) |
+| `GET`     | `/events/organizer/{id}` | Événements d'un organisateur          |
+| `POST`    | `/events`                | Créer un événement                    |
+| `PUT`     | `/events/{id}`           | Modifier un événement                 |
+| `DELETE`  | `/events/{id}`           | Supprimer un événement                |
 
 ### Commandes & Billets
-| Méthode | Endpoint | Description |
-|---|---|---|
-| `POST` | `/orders` | Passer une commande |
-| `GET` | `/orders/client/{id}` | Commandes d'un client |
-| `GET` | `/orders/stats` | Statistiques globales des commandes |
-| `GET` | `/tickets/client/{id}` | Billets d'un client |
-| `GET` | `/tickets/order/{id}` | Billets d'une commande |
+| Méthode | Endpoint               | Description                         |
+|---------|------------------------|-------------------------------------|
+| `POST`  | `/orders`              | Passer une commande                 |
+| `GET`   | `/orders/client/{id}`  | Commandes d'un client               |
+| `GET`   | `/orders/stats`        | Statistiques globales des commandes |
+| `GET`   | `/tickets/client/{id}` | Billets d'un client                 |
+| `GET`   | `/tickets/order/{id}`  | Billets d'une commande              |
 
 ---
 
