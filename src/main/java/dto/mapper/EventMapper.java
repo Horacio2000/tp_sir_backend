@@ -1,7 +1,9 @@
 package dto.mapper;
 
 import dto.EventDto;
+import entity.Category;
 import entity.Event;
+
 
 /**
  * Utilitaire pour convertir Event <-> EventDto
@@ -20,6 +22,9 @@ public class EventMapper {
         dto.setId(event.getId());
         dto.setTitle(event.getTitle());
         dto.setDescription(event.getDescription());
+        dto.setCategoryNames(event.getCategories().stream()
+            .map(Category::getName)
+            .collect(java.util.stream.Collectors.toList()));
         dto.setEventDate(event.getEventDate());
         dto.setStartTime(event.getStartTime());
         dto.setEndTime(event.getEndTime());

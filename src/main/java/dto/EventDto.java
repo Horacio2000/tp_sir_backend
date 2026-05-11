@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import entity.enums.EventStatus;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * DTO pour l'entité Event
@@ -14,6 +16,8 @@ public class EventDto {
     private Long id;
     private String title;
     private String description;
+    private List<String> categoryNames = new ArrayList<>();
+
     private Long organizerId;
     
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -83,6 +87,14 @@ public class EventDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<String> getCategoryNames() { 
+        return categoryNames; 
+    }
+
+    public void setCategoryNames(List<String> categoryNames) { 
+        this.categoryNames = categoryNames; 
     }
 
     public LocalDate getEventDate() {
